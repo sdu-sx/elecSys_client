@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+         <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_weight="1">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="任务名"></TextView>
+             <TextView
+                 android:id="@+id/task_dialog_id"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:text="id"></TextView>
+         </LinearLayout>
+         <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_weight="1">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="任务状态"></TextView>
+             <TextView
+                 android:id="@+id/task_dialog_state"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 ></TextView>
+         </LinearLayout>
+         <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_weight="1">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="设备数量"></TextView>
+             <TextView
+                 android:id="@+id/task_dialog_deviceNum"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 ></TextView>
+         </LinearLayout>
+	        
+        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务发布时间"></TextView>
+        <TextView
+            android:id="@+id/task_dialog_releaseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="任务截止时间" />
+	    <TextView
+		    android:id="@+id/task_dialog_deadLine"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务完成时间"></TextView>
+        <TextView
+            android:id="@+id/task_dialog_finishTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ></TextView>
+    </LinearLayout>
+    
+
+</LinearLayout>
