@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Zxing.Demo.CaptureActivity;
 import com.sdjxd.elecsysclient.R;
 import com.sdjxd.elecsysclient.adapter.TaskAdapter;
 import com.sdjxd.elecsysclient.model.Device;
 import com.sdjxd.elecsysclient.model.Task;
+import com.sdjxd.elecsysclient.model.Task.TaskState;
 import com.sdjxd.elecsysclient.service.ESClientService;
 import com.sdjxd.elecsysclient.service.RequestFilter;
 
@@ -53,6 +55,7 @@ public class TaskDetails extends Activity implements RequestFilter
 	private Button backBtn,homeBtn,summitBtn,detailBtn;
 	private ListView listview;
 	private TaskReceiver receiver;
+	private boolean[] hasCheck;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -61,6 +64,7 @@ public class TaskDetails extends Activity implements RequestFilter
 		setContentView(R.layout.activity_taskdetails);
 		Intent intent = getIntent();
 		task=(Task) intent.getSerializableExtra(KEY_TASK);
+		hasCheck = new boolean[task.deviceNum];
 		Log.d(TAG, "taskname:"+task.tname);
 		Log.d(TAG, "count:"+task.getDevices().size());
 		adapter=new TaskAdapter(this,
@@ -139,13 +143,27 @@ public class TaskDetails extends Activity implements RequestFilter
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int pos, long id) 
 		{
-			String tid=task.tid;
-			String did=task.getDevices().get(pos).did;
-			Intent intent =new Intent(TaskDetails.this, ESClientService.class);
-			intent.setAction(ACTION_GET_DEVICE);
-			intent.putExtra(KEY_TID, tid);
-			intent.putExtra(KEY_DID, did);
-			TaskDetails.this.startService(intent);
+			if(task.state.equals(TaskState.UNDO)&& hasCheck[pos]==false)
+			{
+				hasCheck[pos]=true;
+				Intent intent = new Intent(TaskDetails.this,CaptureActivity.class);
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.putExtra(KEY_DID, task.getDevices().get(pos).did);
+				intent.putExtra(KEY_TID, task.tid);
+				TaskDetails.this.startActivity(intent);
+				
+			}
+			else
+			{
+				String tid=task.tid;
+				String did=task.getDevices().get(pos).did;
+				Intent service =new Intent(TaskDetails.this, ESClientService.class);
+				service.setAction(ACTION_GET_DEVICE);
+				service.putExtra(KEY_TID, tid);
+				service.putExtra(KEY_DID, did);
+				TaskDetails.this.startService(service);
+			}
+			
 		}
 
 		@Override
@@ -169,7 +187,7 @@ public class TaskDetails extends Activity implements RequestFilter
 			else if(view.getId()==R.id.task_topbutton)
 			{
 				LayoutInflater inflater = LayoutInflater.from(TaskDetails.this);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String taskdeline = dateFormat.format(task.deadLine);
 				String taskfitimeline = dateFormat.format(task.finishTime);
 				String taskretimeline = dateFormat.format(task.releaseTime);
@@ -237,7 +255,7 @@ public class TaskDetails extends Activity implements RequestFilter
 			if(intent.getBooleanExtra(KEY_RESPONSE, false)==true)
 			{
 				Date ft =(Date) intent.getSerializableExtra(KEY_FINISH_TIME);
-				SimpleDateFormat df=new SimpleDateFormat("yyyy-mm-dd");
+				SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 				result="任务提交成功！提交时间："+df.format(ft);
 				Toast.makeText(TaskDetails.this, result, Toast.LENGTH_LONG).show();
 				TaskDetails.this.finish();

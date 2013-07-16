@@ -22,6 +22,7 @@ public interface Protocol
 	public static final String REQUEST_GET_FAULT_HISTORY="getFault?";
 	public static final String REQUEST_POST_RESULT="writeResult";
 	public static final String REQUEST_FINISH_TASK="checkTask?";
+	public static final String REQUEST_CHECK_QRCODE="checkQR";
 	
 	public static final String PARAM_WID="wid=";
 	public static final String PARAM_PWD="pwd=";

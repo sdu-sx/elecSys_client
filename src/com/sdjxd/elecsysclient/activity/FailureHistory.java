@@ -97,7 +97,7 @@ public class FailureHistory extends Activity implements RequestFilter
 	private void setData()
 	{
 		data.clear();
-		SimpleDateFormat df=new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 		HashMap<String,Object> map;
 		Vector<Fault> faults = history.getFaults();
 		Fault fault;

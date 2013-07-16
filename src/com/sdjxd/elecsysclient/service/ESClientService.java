@@ -20,6 +20,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Process;
 import android.util.Log;
+import android.widget.Toast;
 /**
  * Classname:ESClientService
  * Description: Electric system的后台服务,接收前端请求并发给后台线程处理
@@ -100,11 +101,23 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 			{
 				sendSaveResult(intent);
 			}
+			else if(action.equals(ACTION_CHECK_QRCODE))
+			{
+				sendCheckQR(intent);
+			}
 		}
 		
 		return START_STICKY_COMPATIBILITY; 
 	}
 	
+	private void sendCheckQR(Intent intent)
+	{
+		Message msg=bgHandler.obtainMessage();
+		msg.setData(intent.getExtras());
+		msg.what=CHECK_QRCODE;
+		msg.sendToTarget();
+	}
+
 	private void sendSaveResult(Intent intent) 
 	{
 		Message msg=bgHandler.obtainMessage();
@@ -155,7 +168,6 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 	 * */
 	private void sendGetDevice(Intent intent) 
 	{
-		String did=intent.getStringExtra(KEY_DID);
 		Message msg=bgHandler.obtainMessage();
 		msg.what=GET_DEVICE;
 		msg.setData(intent.getExtras());
@@ -301,8 +313,48 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 			{
 				receiveSaveResult(msg);
 			}
+			else if(msg.what==CHECK_QRCODE)
+			{
+				receiveCheckQR(msg);
+			}
 		}
 		
+		private void receiveCheckQR(Message msg) 
+		{
+			String result=(String) msg.obj;
+			String did=msg.getData().getString(KEY_DID);
+			String text=null;
+			if(msg.arg1==ERR_NO_HOST)
+			{
+				text = "未设置服务器IP或端口";
+				Toast.makeText(ESClientService.this, text, Toast.LENGTH_LONG).show();
+			}
+			else if(msg.arg1==ERR_NETWORK)
+			{
+				text = "网络传输异常";
+				Toast.makeText(ESClientService.this, text, Toast.LENGTH_LONG).show();
+			}
+			else if(msg.arg1==ERR_NO_DID)
+			{
+				text = "找不到本设备";
+				Toast.makeText(ESClientService.this, text, Toast.LENGTH_LONG).show();
+			}
+			else if(result==null)
+			{
+				text = "二维码验证失败";
+				Toast.makeText(ESClientService.this, text, Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				Log.d(TAG, "check success!");
+				text = result;
+				Toast.makeText(ESClientService.this, text, Toast.LENGTH_SHORT).show();
+				Intent intent =new Intent();
+				intent.putExtras(msg.getData());
+				sendGetDevice(intent);
+			}
+		}
+
 		private void receiveSaveResult(Message msg) 
 		{
 			String result = (String) msg.obj;
@@ -462,6 +514,16 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 				intent.putExtra(KEY_RESPONSE, false);
 				intent.putExtra(KEY_ERROR, "网络传输异常");
 				Log.d(TAG, "put network error to intent!");
+			}
+			else if(msg.arg1==ERR_NO_DID)
+			{
+				intent.putExtra(KEY_RESPONSE, false);
+				intent.putExtra(KEY_ERROR, "找不到本设备");
+			}
+			else if(msg.arg1==ERR_INVALID_UPLOAD)
+			{
+				intent.putExtra(KEY_RESPONSE, false);
+				intent.putExtra(KEY_ERROR, "输入缺陷不正确");
 			}
 			else if(fault==null)
 			{

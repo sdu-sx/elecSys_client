@@ -1,18 +1,14 @@
 package com.sdjxd.elecsysclient.net;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -192,7 +188,8 @@ public class ElecSysClient implements Protocol
 					obj=array.getJSONObject(i);
 					String fid=obj.getString(KEY_FID);
 					String content=obj.getString(KEY_FAULT_CONTENT);
-					Date date=dateFormat.parse(obj.getString(KEY_FAULT_TIME));
+					String faultTime=obj.getString(KEY_FAULT_TIME);
+					Date date=dateFormat.parse(faultTime);
 					fault=new Fault(fid,did,content,date);
 					faults.addFault(fault);
 				}
@@ -532,6 +529,50 @@ public class ElecSysClient implements Protocol
 		return fault;
 	}
 	/**
+	 * 提交二维码信息供服务器检查
+	 * @param
+	 * did 设备id
+	 * qrcode 解码后的二维码字符串
+	 * return 匹配结果
+	 * @throws NoHostException 
+	 * @throws IOException 
+	 * @throws DeviceNotFoundException 
+	 * */
+	public String checkQRCode(String did, String qrcode) throws NoHostException, IOException, DeviceNotFoundException 
+	{
+		String result=null;
+		String surl=generateURL(hostIp,hostPort);
+		surl+=REQUEST_CHECK_QRCODE;
+		Log.d(TAG, surl);
+		HttpPost httpRequest = new HttpPost(surl);
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair(KEY_DID, did));
+		params.add(new BasicNameValuePair(KEY_DEVICE_QRCODE, qrcode));
+		try
+		{
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+			HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
+			int response=httpResponse.getStatusLine().getStatusCode();
+			if(response==200)
+			{
+				String message = EntityUtils.toString(httpResponse.getEntity(), "utf-8");
+				if(message.equals(ACK))
+				{
+					result="二维码认证成功！";
+				}
+				else if(message.equals(MSG_NO_DID))
+				{
+					throw new DeviceNotFoundException();
+				}
+			}
+		} 
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		return result;
+	}
+	/**
 	 * 获取任务请求
 	 * @param
 	 * tid 任务id
@@ -792,6 +833,7 @@ public class ElecSysClient implements Protocol
 		return tasklist;
 	}
 	
+	
 	/**
 	 * 把输入流转化成JSON对象
 	 * @param 
@@ -830,25 +872,4 @@ public class ElecSysClient implements Protocol
 		return jsonObject;
 	}
 	
-	private JSONArray parseToJSONArray(InputStream in) throws IOException
-	{
-		JSONArray jsonArray=null;
-		Reader reader = new InputStreamReader(in,"utf-8");
-		char[] buffer=new char[in.available()];
-		reader.read(buffer);
-		String json=new String(buffer);
-		if(json!=null)
-		{
-			Log.d(TAG, "json:"+json);
-			try
-			{
-				jsonArray=new JSONArray(json);
-			} 
-			catch (JSONException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		return jsonArray;
-	}
 }

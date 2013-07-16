@@ -54,7 +54,7 @@ public class HomeActivity extends Activity implements RequestFilter
 		setContentView(R.layout.activity_home);
 		findViewById();
 		
-		String[] key = new String[]{KEY_TNAME,KEY_DEADLINE,KEY_DEVICE_NUM};
+		String[] key = new String[]{KEY_TNAME,KEY_TIME,KEY_DEVICE_NUM};
 		int[] value = new int[]{R.id.H_list_work,R.id.H_list_time,R.id.H_list_device};
 		data=new ArrayList<HashMap<String,Object>>();
 		adapter = new SimpleAdapter(this, data, R.layout.activity_home_listview,key,value);
@@ -123,7 +123,7 @@ public class HomeActivity extends Activity implements RequestFilter
 	{
 		data.clear();
 		Vector<TaskLite> tasks=tasklist.getTasks();
-		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		TaskLite task;
 		HashMap<String,Object> map;
 		for(int i=0;i<tasks.size();i++)
@@ -131,7 +131,14 @@ public class HomeActivity extends Activity implements RequestFilter
 			task=tasks.get(i);
 			map = new HashMap<String,Object>();
 			map.put(KEY_TNAME, task.tname);
-			map.put(KEY_DEADLINE, dateFormat.format(task.deadLine));
+			if(tasklist.state.equals(TaskState.UNDO)||tasklist.state.equals(TaskState.OVERTIME))
+			{
+				map.put(KEY_TIME, dateFormat.format(task.deadLine));
+			}
+			else
+			{
+				map.put(KEY_TIME, dateFormat.format(task.finishTime));
+			}
 			map.put(KEY_DEVICE_NUM, task.deviceNumber);
 			data.add(map);
 		}

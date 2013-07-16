@@ -54,4 +54,6 @@ public interface RequestFilter
 	public static final String KEY_DEVICE_NUM="deviceNum";
 	public static final String KEY_BLANK="blank";
 	public static final String KEY_FAULT_TIME="faultTime";
+	public static final String KEY_QRCODE="qr";
+	public static final String KEY_TIME="time";
 }

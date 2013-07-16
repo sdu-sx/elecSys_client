@@ -3,6 +3,7 @@ package com.sdjxd.elecsysclient.activity;
 
 import java.util.Vector;
 
+import com.Zxing.Demo.CaptureActivity;
 import com.sdjxd.elecsysclient.R;
 import com.sdjxd.elecsysclient.adapter.DeviceAdapter;
 import com.sdjxd.elecsysclient.model.CheckCard;
@@ -164,12 +165,6 @@ public class DeviceDetails extends Activity implements RequestFilter
 					String result="请填好所有抄录值并标记完成";
 					Toast.makeText(DeviceDetails.this, result, Toast.LENGTH_LONG).show();
 				}
-			}
-			else if(view.getId()==R.id.device_dimensionalbutton)
-			{
-//				Intent intent = new Intent(DeviceDetails.this,CaptureActivity.class);
-//				intent.setAction(Intent.ACTION_VIEW);
-//				DeviceDetails.this.startActivity(intent);
 			}
 			else if(view.getId()==R.id.device_topbutton)
 			{

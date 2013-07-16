@@ -97,8 +97,50 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		{
 			saveDeviceResult(msg);
 		}
+		else if(msg.what==CHECK_QRCODE)
+		{
+			checkQRCode(msg);
+		}
 	}
 	
+	private void checkQRCode(Message msg) 
+	{
+		Message reply = targetHandler.obtainMessage();
+		reply.what=msg.what;
+		Bundle data = msg.getData();
+		String did=data.getString(KEY_DID);
+		String qrcode = data.getString(KEY_QRCODE);
+		String result=null;
+		try 
+		{
+			result=client.checkQRCode(did,qrcode);
+			reply.obj=result;
+			reply.setData(data);
+		} 
+		catch (NoHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			reply.arg1=ERR_NO_HOST;
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			reply.arg1=ERR_NETWORK;
+		} 
+		catch (DeviceNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			reply.arg1=ERR_NO_DID;
+		}
+		finally
+		{
+			reply.sendToTarget();
+		}
+	}
+
 	private void saveDeviceResult(Message msg) 
 	{
 		Message reply=targetHandler.obtainMessage();
