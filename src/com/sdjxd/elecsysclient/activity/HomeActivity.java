@@ -139,7 +139,7 @@ public class HomeActivity extends Activity implements RequestFilter
 			{
 				map.put(KEY_TIME, dateFormat.format(task.finishTime));
 			}
-			map.put(KEY_DEVICE_NUM, task.deviceNumber);
+			map.put(KEY_DEVICE_NUM, "Éè±¸Êý£º"+task.deviceNumber);
 			data.add(map);
 		}
 		adapter.notifyDataSetChanged();

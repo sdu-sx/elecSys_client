@@ -56,4 +56,6 @@ public interface RequestFilter
 	public static final String KEY_FAULT_TIME="faultTime";
 	public static final String KEY_QRCODE="qr";
 	public static final String KEY_TIME="time";
+	public static final String KEY_IP="ip";
+	public static final String KEY_PORT="port";
 }

@@ -3,11 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="@color/white">
      
      <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp" 
+        android:layout_height="wrap_content" 
         android:paddingLeft="5dip"
         >
 
@@ -15,26 +15,33 @@
         android:id="@+id/D_list_work"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:gravity="left"
-        android:text="@string/task_name"
-        android:textSize="14pt" />
+        android:text="条目条目条目条目条目条目条目条目条目条目条目条目条目条目"
+        android:textColor="@color/black"
+        android:textSize="12pt" />
 
 </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp" >
+        android:layout_height="wrap_content" >
 
         <EditText
             android:id="@+id/D_list_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="5dp"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:freezesText="true"
-            android:ems="10" 
-            android:background="@drawable/e_tview_bg">
+            android:freezesText="true" 
+            android:ems="10"
+            android:background="@drawable/e_tview_bg" 
+            android:textColor="@color/dark_gray"
+            android:hint="@string/hint_result" >
 
             
         </EditText>
@@ -43,10 +50,11 @@
             android:id="@+id/D_list_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@id/D_list_editText"
             android:layout_marginRight="5dp"
-             />
+            android:layout_marginLeft="5dp" />
         
         </RelativeLayout>
 

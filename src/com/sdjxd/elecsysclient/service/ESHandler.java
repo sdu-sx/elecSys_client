@@ -101,8 +101,25 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		{
 			checkQRCode(msg);
 		}
+		else if(msg.what==SET_HOST)
+		{
+			setHost(msg);
+		}
 	}
 	
+	private void setHost(Message msg) 
+	{
+		Message reply = targetHandler.obtainMessage();
+		reply.what=msg.what;
+		Bundle data = msg.getData();
+		String ip= data.getString(KEY_IP);
+		String port = data.getString(KEY_PORT);
+		client.setIP(ip);
+		client.setPort(port);
+		reply.obj="…Ë÷√≥…π¶";
+		reply.sendToTarget();
+	}
+
 	private void checkQRCode(Message msg) 
 	{
 		Message reply = targetHandler.obtainMessage();

@@ -6,11 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import com.Zxing.Demo.CaptureActivity;
 import com.sdjxd.elecsysclient.R;
 import com.sdjxd.elecsysclient.adapter.TaskAdapter;
 import com.sdjxd.elecsysclient.model.Device;
+import com.sdjxd.elecsysclient.model.DeviceLite;
 import com.sdjxd.elecsysclient.model.Task;
 import com.sdjxd.elecsysclient.model.Task.TaskState;
 import com.sdjxd.elecsysclient.service.ESClientService;
@@ -137,6 +139,17 @@ public class TaskDetails extends Activity implements RequestFilter
 		detailBtn.setOnClickListener(listener);
 		listview.setOnItemClickListener(listener);
 	}
+	private void setDeviceCheck(Device device)
+	{
+		Vector<DeviceLite> list=task.getDevices();
+		for(int i=0;i<list.size();i++)
+		{
+			if(list.get(i).did.equals(device.did))
+			{
+				hasCheck[i]=true;
+			}
+		}
+	}
 	private class TaskListener implements OnClickListener,OnItemClickListener
 	{
 
@@ -145,7 +158,7 @@ public class TaskDetails extends Activity implements RequestFilter
 		{
 			if(task.state.equals(TaskState.UNDO)&& hasCheck[pos]==false)
 			{
-				hasCheck[pos]=true;
+//				hasCheck[pos]=true;
 				Intent intent = new Intent(TaskDetails.this,CaptureActivity.class);
 				intent.setAction(Intent.ACTION_VIEW);
 				intent.putExtra(KEY_DID, task.getDevices().get(pos).did);
@@ -273,6 +286,7 @@ public class TaskDetails extends Activity implements RequestFilter
 			if(intent.getBooleanExtra(KEY_RESPONSE, false)==true)
 			{
 				Device device=(Device) intent.getSerializableExtra(KEY_DEVICE);
+				setDeviceCheck(device);
 				Intent start =new Intent(TaskDetails.this,DeviceDetails.class);
 				start.setAction(Intent.ACTION_VIEW);
 				start.putExtra(KEY_DEVICE, device);

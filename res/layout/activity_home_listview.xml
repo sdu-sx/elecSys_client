@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="102dp"
+    android:layout_height="wrap_content"
      android:orientation="vertical"
     android:background="#ffffff">
      >
      <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp" 
+        android:layout_height="wrap_content" 
         android:paddingLeft="5dip"
         >
 
@@ -16,15 +16,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:gravity="left"
+        android:layout_marginTop="10dp"
         android:text="@string/task_name"
-        android:textSize="14pt" />
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="12pt" />
 
 </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp" >
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/H_list_time"
@@ -32,24 +35,24 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:paddingLeft="5dip"
-            android:text="TextView"
+            android:text="2013-8-21"
+            android:textColor="@color/dark_gray"
             android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/H_list_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/H_list_time"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
+            android:paddingRight="5dp"
             android:layout_centerVertical="true"
-            android:text="TextView" />
+            android:textColor="@color/dark_gray"
+            android:text="设备数：3" />
         
         </RelativeLayout>
-        <View 
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#dcdcdc"
-            />
 
 </LinearLayout>

@@ -26,4 +26,9 @@
     <string name="welcome">欢迎进入手机巡视系统</string>
     <string name="cache">清除缓存</string>
     <string name="exit">退出</string>
+    <string name="hint_ip">请输入服务器ip</string>
+    <string name="hint_port">请输入服务器端口</string>
+    <string name="hint_wid">请输入工号</string>
+    <string name="hint_pwd">请输入密码</string>
+    <string name="hint_result">请输入抄录值</string>
 </resources>

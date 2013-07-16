@@ -5,13 +5,16 @@ import com.sdjxd.elecsysclient.service.ESClientService;
 import com.sdjxd.elecsysclient.service.RequestFilter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -30,6 +33,8 @@ public class LoginActivity extends Activity implements RequestFilter
 	private CheckBox rem_pw, auto_login;
 	private Button btn_login;
 	private ImageButton btnQuit;
+	private Button settingBtn;
+	private EditText editIp,editPort;
     private String userNameValue,passwordValue;
 	private SharedPreferences sp;
 	private LoginReceiver receiver; 
@@ -43,16 +48,14 @@ public class LoginActivity extends Activity implements RequestFilter
         //获得实例对象
 		sp = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		findViewById();
-		startService();
-		
-		
+		startService();	
 
-		btn_login.setOnClickListener(new LoginListener());
-		rem_pw.setOnCheckedChangeListener(new LoginListener());
-		auto_login.setOnCheckedChangeListener(new LoginListener());
-		btnQuit.setOnClickListener(new LoginListener());
-		
-		
+		LoginListener listener = new LoginListener();
+		btn_login.setOnClickListener(listener);
+		rem_pw.setOnCheckedChangeListener(listener);
+		auto_login.setOnCheckedChangeListener(listener);
+		btnQuit.setOnClickListener(listener);
+		settingBtn.setOnClickListener(listener);
 	}
 	protected void onStart()
 	{
@@ -84,16 +87,18 @@ public class LoginActivity extends Activity implements RequestFilter
 		receiver = new LoginReceiver();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ACTION_LOGIN);
+		filter.addAction(ACTION_CLEAR_CACHE);
+		filter.addAction(ACTION_SET_HOST);
 		registerReceiver(receiver, filter);
 	}
-	protected void onRestart()
-	{
-		super.onRestart();
-		userName.setText("");
-		password.setText("");
-		rem_pw.setChecked(false);
-		auto_login.setChecked(false);
-	}
+//	protected void onRestart()
+//	{
+//		super.onRestart();
+//		userName.setText("");
+//		password.setText("");
+//		rem_pw.setChecked(false);
+//		auto_login.setChecked(false);
+//	}
 	private void startService()
 	{
 		Intent intent=new Intent(this,ESClientService.class);
@@ -108,6 +113,7 @@ public class LoginActivity extends Activity implements RequestFilter
 		auto_login = (CheckBox) findViewById(R.id.cb_auto);
         btn_login = (Button) findViewById(R.id.btn_login);
         btnQuit = (ImageButton)findViewById(R.id.img_btn); 
+        settingBtn = (Button) findViewById(R.id.set);
 	}
 	protected void onStop()
 	{
@@ -119,7 +125,23 @@ public class LoginActivity extends Activity implements RequestFilter
 		super.onDestroy();
 		ActivityManager.getInstance().removeActivity(this);
 	}
-	private class LoginListener implements OnClickListener,OnCheckedChangeListener
+	private void buildSettingDialog()
+	{
+		AlertDialog.Builder builder=new AlertDialog.Builder(this);
+		LoginListener listener = new LoginListener();
+		builder.setTitle(R.string.setting);
+		LayoutInflater inflater=LayoutInflater.from(this);
+		View v=inflater.inflate(R.layout.setting_dialog, null);
+		editIp=(EditText) v.findViewById(R.id.setting_dialog_ip);
+		editPort=(EditText) v.findViewById(R.id.setting_dialog_port);
+		Button clearBtn = (Button) v.findViewById(R.id.setting_dialog_clear);
+		clearBtn.setOnClickListener(listener);
+		builder.setView(v);
+		builder.setPositiveButton(R.string.ture,listener);
+		builder.setNegativeButton(R.string.cancel, null);
+		builder.show();
+	}
+	private class LoginListener implements OnClickListener,OnCheckedChangeListener, android.content.DialogInterface.OnClickListener
 	{
 
 		@Override
@@ -129,6 +151,14 @@ public class LoginActivity extends Activity implements RequestFilter
 			{
 				userNameValue = userName.getText().toString();
 			    passwordValue = password.getText().toString();
+//			    if(userNameValue.equals("debug")&&userNameValue.equals("debug"))
+//			    {
+//			    	Intent in=new Intent(LoginActivity.this,LogoActivity.class);
+//					in.setAction(Intent.ACTION_VIEW);
+//					in.putExtra(KEY_WID, "001");
+//					in.putExtra(KEY_WNAME, "张三");
+//					LoginActivity.this.startActivity(in);
+//			    }
 			    Intent intent= new Intent(LoginActivity.this,ESClientService.class);
 				intent.setAction(ACTION_LOGIN);
 				intent.putExtra(KEY_WID, userNameValue);
@@ -140,6 +170,16 @@ public class LoginActivity extends Activity implements RequestFilter
 				Intent intent=new Intent(LoginActivity.this,ESClientService.class);
 				LoginActivity.this.stopService(intent);
 				ActivityManager.exit();
+			}
+			else if(v.getId()==R.id.setting_dialog_clear)
+			{
+				Intent intent = new Intent(LoginActivity.this,ESClientService.class);
+				intent.setAction(ACTION_CLEAR_CACHE);
+				LoginActivity.this.startService(intent);
+			}
+			else if(v.getId()==R.id.set)
+			{
+				buildSettingDialog();
 			}
 		}
 
@@ -163,7 +203,6 @@ public class LoginActivity extends Activity implements RequestFilter
 			}
 			else if(buttonView.getId()==R.id.cb_auto) //自动登录
 			{
-
 				if (isChecked) 
 				{
 					sp.edit().putBoolean("AUTO_ISCHECK", true).commit();
@@ -173,40 +212,90 @@ public class LoginActivity extends Activity implements RequestFilter
 					sp.edit().putBoolean("AUTO_ISCHECK", false).commit();
 				}
 			}
+
+		}
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) 
+		{
+			String ip=editIp.getText().toString();
+			String port = editPort.getText().toString();
+			Intent intent = new Intent(LoginActivity.this,ESClientService.class);
+			intent.setAction(ACTION_SET_HOST);
+			intent.putExtra(KEY_IP, ip);
+			intent.putExtra(KEY_PORT, port);
+			LoginActivity.this.startService(intent);
 		}
 		
 	}
 	private class LoginReceiver extends BroadcastReceiver
 	{
-
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
 			String action=intent.getAction();
 			if(action.equals(ACTION_LOGIN))
 			{
-				if(intent.getBooleanExtra(KEY_RESPONSE, false))
+				showLogin(intent);
+			}
+			else if(action.equals(ACTION_SET_HOST))
+			{
+				showSetHost(intent);
+			}
+			else if(action.equals(ACTION_CLEAR_CACHE))
+			{
+				showClearCache(intent);
+			}
+		}
+		private void showClearCache(Intent intent) 
+		{
+			String result;
+			if(intent.getBooleanExtra(KEY_RESPONSE, false)==true)
+			{
+				result=intent.getStringExtra(KEY_REPLY);
+			}
+			else
+			{
+				result=intent.getStringExtra(KEY_ERROR);
+			}
+			Toast.makeText(LoginActivity.this, result, Toast.LENGTH_LONG).show();
+		}
+		private void showSetHost(Intent intent) 
+		{
+			String result;
+			if(intent.getBooleanExtra(KEY_RESPONSE, false)==true)
+			{
+				result=intent.getStringExtra(KEY_REPLY);
+			}
+			else
+			{
+				result=intent.getStringExtra(KEY_ERROR);
+			}
+			Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+		}
+
+		private void showLogin(Intent intent) 
+		{
+			if(intent.getBooleanExtra(KEY_RESPONSE, false))
+			{
+				Editor editor=sp.edit();
+				String wid=intent.getStringExtra(KEY_WID);
+				String pwd=intent.getStringExtra(KEY_PWD);
+				if(sp.getBoolean("ISCHECK", false))
 				{
-					Editor editor=sp.edit();
-					String wid=intent.getStringExtra(KEY_WID);
-					String pwd=intent.getStringExtra(KEY_PWD);
-					if(sp.getBoolean("ISCHECK", false))
-					{
-						editor.putString(KEY_WID, wid).commit();
-						editor.putString(KEY_PWD, pwd).commit();
-					}
-					
-					Intent in=new Intent(LoginActivity.this,LogoActivity.class);
-					in.setAction(Intent.ACTION_VIEW);
-					in.putExtra(KEY_WID, wid);
-					in.putExtra(KEY_WNAME, intent.getStringExtra(KEY_WNAME));
-					LoginActivity.this.startActivity(in);
+					editor.putString(KEY_WID, wid).commit();
+					editor.putString(KEY_PWD, pwd).commit();
 				}
-				else
-				{
-					String info=intent.getStringExtra(KEY_ERROR);
-					Toast.makeText(context, info, Toast.LENGTH_LONG).show();
-				}
+				Intent in=new Intent(LoginActivity.this,LogoActivity.class);
+				in.setAction(Intent.ACTION_VIEW);
+				in.putExtra(KEY_WID, wid);
+				in.putExtra(KEY_WNAME, intent.getStringExtra(KEY_WNAME));
+				LoginActivity.this.startActivity(in);
+			}
+			else
+			{
+				String info=intent.getStringExtra(KEY_ERROR);
+				Toast.makeText(LoginActivity.this, info, Toast.LENGTH_LONG).show();
 			}
 		}
 		

@@ -75,7 +75,7 @@ public class ElecSysClient implements Protocol
 	 * */
 	public ElecSysClient()
 	{
-		hostIp="211.87.230.102";
+		hostIp="121.250.216.127";
 		hostPort="8080";
 		dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		

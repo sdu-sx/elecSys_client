@@ -105,11 +105,23 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 			{
 				sendCheckQR(intent);
 			}
+			else if(action.equals(ACTION_SET_HOST))
+			{
+				sendSetHost(intent);
+			}
 		}
 		
 		return START_STICKY_COMPATIBILITY; 
 	}
 	
+	private void sendSetHost(Intent intent)
+	{
+		Message msg=bgHandler.obtainMessage();
+		msg.setData(intent.getExtras());
+		msg.what=SET_HOST;
+		msg.sendToTarget();
+	}
+
 	private void sendCheckQR(Intent intent)
 	{
 		Message msg=bgHandler.obtainMessage();
@@ -317,8 +329,30 @@ public class ESClientService extends Service implements RequestFilter,MessageCod
 			{
 				receiveCheckQR(msg);
 			}
+			else if(msg.what==SET_HOST)
+			{
+				receiveSetHost(msg);
+			}
 		}
 		
+		private void receiveSetHost(Message msg) 
+		{
+			String result=(String) msg.obj;
+			Intent intent = new Intent(ACTION_SET_HOST);
+			if(result==null)
+			{
+				intent.putExtra(KEY_RESPONSE, false);
+				intent.putExtra(KEY_ERROR, "…Ë÷√ ß∞‹");
+			}
+			else
+			{
+				intent.putExtra(KEY_RESPONSE, true);
+				intent.putExtra(KEY_REPLY, result);
+				Log.d(TAG, result);
+			}
+			ESClientService.this.sendBroadcast(intent);
+		}
+
 		private void receiveCheckQR(Message msg) 
 		{
 			String result=(String) msg.obj;
