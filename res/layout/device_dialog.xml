@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="任务状态："
+            android:layout_marginLeft="5dp"></TextView>
+        <TextView 
+            android:id="@+id/device_dialog_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"></TextView>
+    </TableRow>
+     <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="设备ID："
+            android:layout_marginLeft="5dp"></TextView>
+        <TextView 
+            android:id="@+id/device_dialog_did"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"></TextView>
+    </TableRow>
+     
+     <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="设备类型："
+            android:layout_marginLeft="5dp"></TextView>
+        <TextView 
+            android:id="@+id/device_dialog_dype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"></TextView>
+    </TableRow>
+     <TableRow >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="任务状态："
+            android:layout_marginLeft="5dp"></TextView>
+        <TextView 
+            android:id="@+id/device_dialog_daddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"></TextView>
+    </TableRow>
+    
+
+</TableLayout>

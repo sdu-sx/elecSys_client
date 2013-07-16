@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/linearlayout1"
+    android:background="@drawable/picture1">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <ImageButton
+            android:id="@+id/img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/moreitems_exit_icon" />
+
+        <TextView
+            android:id="@+id/tv_zh"
+            android:layout_width="wrap_content"
+            android:layout_height="35dip"
+            android:layout_above="@+id/et_zh"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="17dp"
+            android:gravity="bottom"
+            android:text="帐号:"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_zh"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_above="@+id/tv_mima"
+            android:layout_centerHorizontal="true"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/tv_mima"
+            android:layout_width="wrap_content"
+            android:layout_height="35dip"
+            android:layout_above="@+id/et_mima"
+            android:layout_alignLeft="@+id/tv_zh"
+            android:gravity="bottom"
+            android:text="密码:"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_mima"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:maxLines="200"
+            android:password="true"
+            android:scrollHorizontally="true" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+        
+        <CheckBox
+            android:id="@+id/cb_mima"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="记住密码"
+            android:textColor="#000000" />
+
+        <CheckBox
+            android:id="@+id/cb_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:enabled="false"
+            android:text="自动登录"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/cb_mima"
+            android:background="@drawable/btn_wcclogin"
+            android:text="登陆"
+            android:textColor="@drawable/textselector_wcclogin_login"
+            android:textSize="8pt" />
+
+        <Button
+            android:id="@+id/set"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/i_f_bt_bg"
+            android:text="@string/setting"
+            android:textColor="@drawable/textselector_1"
+            android:textSize="8pt" />
+            
+    </RelativeLayout>
+</LinearLayout>

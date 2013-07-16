@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TableLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+     xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableRow >
+        <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.4"
+             android:text="任务ID："></TextView>
+        <TextView
+             android:id="@+id/task_dialog_id"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1.6"
+             ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="发布时间："></TextView>
+        <TextView
+            android:id="@+id/task_dialog_releaseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"
+            
+            ></TextView>
+    </TableRow>
+    <TableRow >
+        <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.4"
+             android:text="任务状态："></TextView>
+        <TextView
+             android:id="@+id/task_dialog_state"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1.6"
+             ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="完成时间："></TextView>
+        <TextView
+            android:id="@+id/task_dialog_finishTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"
+          
+            ></TextView>
+    </TableRow>
+    <TableRow >
+        <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.4"
+             android:text="设备数量："></TextView>
+        <TextView
+             android:id="@+id/task_dialog_deviceNum"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1.6"
+            ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="截止时间："></TextView>
+        <TextView
+            android:id="@+id/task_dialog_deadLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"
+            
+            ></TextView>
+    </TableRow>
+</TableLayout>

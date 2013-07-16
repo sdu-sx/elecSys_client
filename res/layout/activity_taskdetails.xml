@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="#ffffff" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" >
+    <RelativeLayout  android:background="@drawable/home_labte_bg" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true">
+            <Button
+                android:id="@+id/task_topbutton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/task_name"
+	            android:textColor="#ffffffff"
+	            android:textSize="20.0dip" 
+	            android:background="@drawable/home_labte_bg"/>
+        </LinearLayout>
+        <Button 
+            
+            android:textSize="15.0dip" 
+            android:textColor="#ffffffff" 
+            android:background="@drawable/b_backtop" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="5.0dip" 
+            android:text="@string/back"
+            android:id="@+id/task_backbutton" 
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <Button 
+            android:textSize="15.0dip" 
+            android:textColor="#ffffffff" 
+            android:background="@drawable/b_top_right"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="5.0dip" 
+            android:text="@string/home"
+            android:id="@+id/task_homebutton" 
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ListView 
+                android:id="@+id/listview_taskdetails" 
+                android:background="#ffffff" 
+                android:scrollbars="none" 
+                android:fadingEdge="none" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:scrollingCache="false" 
+                android:cacheColorHint="#00000000"
+                android:divider="#cecece"
+                android:dividerHeight="2dp" ></ListView>
+        </LinearLayout>
+    
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_labte_bg" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" >
+            <Button
+                android:id="@+id/task_submitbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5.0dip"
+                android:background="@drawable/b_top_right"
+                android:text="@string/submit"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip"
+                android:gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+    
+
+</LinearLayout>

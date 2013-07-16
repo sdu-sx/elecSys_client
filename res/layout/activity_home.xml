@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout  android:background="#ffffff"
+     android:layout_width="fill_parent" 
+     android:layout_height="fill_parent"
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:background="@drawable/home_labte_bg" >
+
+        <LinearLayout 
+            android:orientation="horizontal" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_centerInParent="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/home_worker_name"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:background="@drawable/home_labte_bg"
+                android:textColor="#ffffffff"
+                android:textSize="20.0dip" />
+            
+        </LinearLayout>
+        <Button
+            android:id="@+id/home_cancellationbutton" 
+            android:textSize="15.0dip" 
+            android:textColor="#ffffffff" 
+            android:background="@drawable/b_backtop" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="5.0dip" 
+            android:text="@string/cancellation" 
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+        <Button 
+            android:id="@+id/home_refreshbutton" 
+            android:textSize="15.0dip" 
+            android:textColor="#ffffffff" 
+            android:background="@drawable/b_top_right"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="5.0dip" 
+            android:text="@string/refresh" 
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+        
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/listview_home"
+                android:background="#ffffff" 
+                android:scrollbars="none" 
+                android:fadingEdge="none" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:scrollingCache="false" 
+                android:cacheColorHint="#00000000"
+                android:divider="#ffd8d8d8" ></ListView>
+         
+        </LinearLayout>
+    
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/home_labte_bg" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/home_unfinishedbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:background="@drawable/b_top_right"
+                android:text="@string/unfinished"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip" />
+            <Button
+                android:id="@+id/home_completedbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:background="@drawable/b_top_right"
+                android:text="@string/completed"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip" />
+            
+
+            
+
+            <Button
+                android:id="@+id/home_expiredbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5.0dip"
+                android:background="@drawable/b_top_right"
+                android:text="@string/expired"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip" 
+                 />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
