@@ -72,25 +72,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/device_dimensionalbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                
-                android:layout_marginLeft="5.0dip"
-                android:background="@drawable/b_top_right"
-                android:text="@string/dimensional_code_scanning"
-                android:textColor="#ffffffff"
-                android:textSize="15.0dip"
-                  />
             
             
             <Button
                 android:id="@+id/device_savebutton"
                 android:layout_width="85dip"
                 android:layout_height="wrap_content"
-                
+				android:layout_marginRight="10dp"
                 android:layout_marginLeft="5.0dip"
                 android:background="@drawable/b_top_right"
                 android:text="@string/save"
@@ -105,6 +93,7 @@
                 android:layout_width="85dip"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5.0dip"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/b_top_right"
                 android:text="@string/device_failure"
                 android:textColor="#ffffffff"

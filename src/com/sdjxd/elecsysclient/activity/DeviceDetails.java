@@ -40,7 +40,7 @@ public class DeviceDetails extends Activity implements RequestFilter
 	private Device device;
 	private TaskState state;
 	private String tid;
-	private Button backBtn,detailBtn,homeBtn,scanBtn,saveBtn,faultsBtn;
+	private Button backBtn,detailBtn,homeBtn,saveBtn,faultsBtn;
 	private ListView listView;
 	private DeviceReceiver receiver;
 		
@@ -112,7 +112,6 @@ public class DeviceDetails extends Activity implements RequestFilter
 		backBtn = (Button) findViewById(R.id.devive_backbutton);
 		detailBtn = (Button) findViewById(R.id.device_topbutton);
 		homeBtn = (Button) findViewById(R.id.device_homebutton);
-		scanBtn = (Button) findViewById(R.id.device_dimensionalbutton);
 		saveBtn = (Button) findViewById(R.id.device_savebutton);
 		faultsBtn = (Button) findViewById(R.id.device_failurebutton);
 		listView = (ListView) findViewById(R.id.listview_devicedetails);
@@ -123,7 +122,6 @@ public class DeviceDetails extends Activity implements RequestFilter
 		backBtn.setOnClickListener(listener);
 		detailBtn.setOnClickListener(listener);
 		homeBtn.setOnClickListener(listener);
-		scanBtn.setOnClickListener(listener);
 		saveBtn.setOnClickListener(listener);
 		faultsBtn.setOnClickListener(listener);
 	}
