@@ -43,12 +43,14 @@
             android:layout_weight="1.6"></TextView>
     </TableRow>
      <TableRow >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="0.4"
-            android:text="任务状态："
-            android:layout_marginLeft="5dp"></TextView>
+            android:text="任务地址：" >
+</TextView>
         <TextView 
             android:id="@+id/device_dialog_daddress"
             android:layout_width="wrap_content"
