@@ -11,7 +11,7 @@
         android:layout_marginRight="5dp"
         android:singleLine="true"
         android:hint="@string/hint_ip"
-        android:inputType="text"/>
+        android:inputType="textAutoComplete"/>
     <EditText 
         android:id="@+id/setting_dialog_port"
         android:layout_width="fill_parent"
@@ -19,7 +19,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:singleLine="true"
-        android:inputType="text"
+        android:inputType="textAutoComplete"
         android:hint="@string/hint_port"/>
     <Button
         android:id="@+id/setting_dialog_clear" 

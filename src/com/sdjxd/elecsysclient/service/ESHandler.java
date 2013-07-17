@@ -193,7 +193,7 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		Task task=(Task) msg.obj;
 		String did="005";//数据库取得
 		Device[] devices = new Device[task.deviceNum];
-		for(int i=0;i<task.deviceNum;i++)
+		for(int i=0;i<task.getDevices().size();i++)
 		{
 			devices[i]=database.getDevice(context, task.getDevices().get(i).did, task.tid);
 		}
@@ -201,8 +201,14 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		{
 			Date ft=null;
 			boolean isDevicePush=true;
-			for(int i=0;i<task.deviceNum;i++)
+			for(int i=0;i<task.getDevices().size();i++)
 			{
+				if(devices[i]==null||devices[i].getCheckCards()==null)
+				{
+					Log.d(TAG, "检查条目专项为空");
+					isDevicePush=false;
+					break;
+				}
 				isDevicePush=client.postDeviceResult(task.tid, devices[i].did, devices[i].getCheckCards());
 			}
 			if(isDevicePush)
@@ -265,7 +271,8 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		reply.what=GET_FAULT_HISTORY;
 		String did=(String)msg.obj;
 		FaultHistory fh=new FaultHistory(did);
-		Date time=database.getFaultHistory(context, fh, did);
+		Date time=null;
+//		time=database.getFaultHistory(context, fh, did);
 		try
 		{
 			FaultHistory remote=client.getFaultHistory(did,time);
@@ -312,13 +319,13 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		Bundle bundle=msg.getData();
 		String tid=bundle.getString(KEY_TID);
 		String did=bundle.getString(KEY_DID);
-		device=database.getDevice(context, did, tid);
+//		device=database.getDevice(context, did, tid);
 		try 
 		{
 			if(device==null)
 			{
 				device=client.getDevice(did);
-				database.setDevice(context, device, tid);
+//				database.setDevice(context, device, tid);
 			}
 			reply.obj=device;
 		} 
@@ -414,7 +421,7 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 //		Log.d(TAG, "count:"+task.getDevices().size());
 		Task task=null;
 		//在本地数据库中查询task
-		task=database.getTask(context, tid);
+//		task=database.getTask(context, tid);
 		if(task!=null)
 		{
 			Log.d(TAG, "database:"+task.toString());
@@ -426,7 +433,7 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 				task = client.getTask(tid);
 				Log.d(TAG, "client:"+task.toString());
 				Log.d(TAG, "count:"+task.getDevices().size());
-				database.setTask(context, task);
+//				database.setTask(context, task);
 			}
 			reply.obj=task;
 		} 
@@ -468,14 +475,15 @@ public class ESHandler extends Handler implements MessageCode,RequestFilter
 		String state=bundle.getString(KEY_TASKSTATE);
 		//在本地数据库中查询
 		TaskList tasklist=new TaskList(wid,TaskState.valueOf(state));
-		Date date= database.getTasklist(context, tasklist, TaskState.valueOf(state), wid);
+		Date date=null;
+//		date = database.getTasklist(context, tasklist, TaskState.valueOf(state), wid);
 		try 
 		{
 			TaskList remotelist=client.getTasklist(wid,state,date);
 			Log.d(TAG, "before append:"+tasklist);
 			tasklist.append(remotelist);
 			Log.d(TAG, "after append:"+tasklist);
-			database.SetTasklist(context, tasklist);
+//			database.SetTasklist(context, tasklist);
 			reply.obj=tasklist;
 		} 
 		catch (NoHostException e) 

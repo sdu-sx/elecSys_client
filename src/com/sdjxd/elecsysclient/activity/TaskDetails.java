@@ -127,6 +127,10 @@ public class TaskDetails extends Activity implements RequestFilter
 		backBtn = (Button) findViewById(R.id.task_backbutton);
 		homeBtn = (Button) findViewById(R.id.task_homebutton);
 		summitBtn = (Button) findViewById(R.id.task_submitbutton);
+		if(!task.state.equals(TaskState.UNDO))
+		{
+			summitBtn.setEnabled(false);
+		}
 		detailBtn = (Button) findViewById(R.id.task_topbutton);
 		listview = (ListView) findViewById(R.id.listview_taskdetails);
 	}
@@ -286,7 +290,10 @@ public class TaskDetails extends Activity implements RequestFilter
 			if(intent.getBooleanExtra(KEY_RESPONSE, false)==true)
 			{
 				Device device=(Device) intent.getSerializableExtra(KEY_DEVICE);
-				setDeviceCheck(device);
+				if(task.state.equals(TaskState.UNDO))
+				{
+					setDeviceCheck(device);
+				}
 				Intent start =new Intent(TaskDetails.this,DeviceDetails.class);
 				start.setAction(Intent.ACTION_VIEW);
 				start.putExtra(KEY_DEVICE, device);
